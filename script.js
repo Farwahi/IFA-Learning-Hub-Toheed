@@ -548,14 +548,10 @@ const answerButtons = document.querySelectorAll(".answer-btn");
 const regScreen = document.getElementById("registration-screen");
 const registerBtn = document.getElementById("registerBtn");
 const homeEl = document.getElementById("home");
+const bodyEl = document.body;
 
-// Hide back button because chapters no longer exist
-if (btnBackChapters) btnBackChapters.style.display = "none";
-if (homeEl) homeEl.style.display = "none";
-
-// show registration, hide quiz at start
-if (quizContainer) quizContainer.style.display = "none";
-if (regScreen) regScreen.style.display = "block";
+// make sure we start NOT in quiz mode
+bodyEl.classList.remove("in-quiz", "lang-ur", "lang-en", "lang-ru");
 
 /*************************************************
  * APPLY LANGUAGE DIRECTION (RTL/LTR)
@@ -564,6 +560,7 @@ function applyLanguageDirection() {
   const lang = localStorage.getItem("quizLanguage") || "ur";
   const elems = [questionEl, a_text, b_text, c_text, d_text];
 
+  // set RTL / LTR on question + options
   elems.forEach((el) => {
     if (!el) return;
     el.classList.remove("rtl", "ltr");
@@ -576,7 +573,26 @@ function applyLanguageDirection() {
       el.classList.add("ltr");
     }
   });
+
+  // set language class on body (for font rules in CSS)
+  bodyEl.classList.remove("lang-ur", "lang-en", "lang-ru");
+  if (lang === "ur") bodyEl.classList.add("lang-ur");
+  else if (lang === "en") bodyEl.classList.add("lang-en");
+  else if (lang === "ru") bodyEl.classList.add("lang-ru");
 }
+
+// call once on load so fonts/direction match saved language
+applyLanguageDirection();
+
+/*************************************************
+ * HIDE CHAPTERS / HOME (no chapters now)
+ *************************************************/
+if (btnBackChapters) btnBackChapters.style.display = "none";
+if (homeEl) homeEl.style.display = "none";
+
+// show registration, hide quiz at start
+if (quizContainer) quizContainer.style.display = "none";
+if (regScreen) regScreen.style.display = "block";
 
 /*************************************************
  * REGISTRATION LOGIC
@@ -594,6 +610,9 @@ if (registerBtn) {
     // store for later use (result page, stats, etc.)
     localStorage.setItem("candidateName", name);
     localStorage.setItem("candidateDOB", dob);
+
+    // now we are IN the quiz → mobile CSS will hide header/footer etc.
+    bodyEl.classList.add("in-quiz");
 
     // hide registration, show quiz, then start quiz
     regScreen.style.display = "none";
@@ -638,7 +657,7 @@ function loadQuiz() {
 
   qCounterEl.innerText = `Q ${currentQuiz + 1} / ${quizData.length}`;
 
-  // apply RTL/LTR for current language
+  // apply RTL/LTR + body language class for current language
   applyLanguageDirection();
 
   // Question + options, all in selected language
@@ -711,9 +730,10 @@ langButtons.forEach((btn) => {
     if (quizContainer.style.display !== "none") {
       loadQuiz();
     } else {
-      // still on registration screen, just update direction there if needed later
+      // still on registration screen, just update direction/fonts
       applyLanguageDirection();
     }
   });
 });
+
 
