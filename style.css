@@ -1318,25 +1318,3 @@ body.lang-ur .answer-btn .text {
     margin-top: 70px !important;
   }
 }
-/* ===== FINAL OVERRIDE: PHONE LANDSCAPE ===== */
-@media (max-width: 900px) and (orientation: landscape) {
-
-  /* always show header in landscape so user can open Home/About */
-  .app-header {
-    display: flex !important;
-    position: fixed;
-    top: 8px;
-    left: 8px;
-    z-index: 1300;
-  }
-
-  /* keep footer hidden during quiz (saves space) */
-  body.in-quiz .copyright {
-    display: none !important;
-  }
-
-  /* hide only the quote when actually inside quiz */
-  body.in-quiz .quote-box {
-    display: none !important;
-  }
-}
