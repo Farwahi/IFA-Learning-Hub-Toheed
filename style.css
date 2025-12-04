@@ -1396,3 +1396,77 @@ body.lang-ur .answer-btn .text {
     margin-top: 70px !important;
   }
 }
+/* =========================================
+   FINAL COMPACT HEADER FOR PHONES
+   (portrait + landscape, quiz + register)
+   ========================================= */
+@media (max-width: 900px) {
+
+  /* tiny fixed header top-left */
+  .app-header {
+    position: fixed !important;
+    top: 8px;
+    left: 8px;
+    right: auto;
+    z-index: 1500;
+    padding: 4px 6px;
+    border-radius: 10px;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    max-width: calc(100% - 16px);
+  }
+
+  /* logo + name in one small row */
+  .brand {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .brand-icon {
+    font-size: 14px;
+  }
+
+  .brand-name {
+    font-size: 11px;
+    white-space: nowrap;   /* keeps “IFA Learning Hub Toheed / Ana Madinah tul Ilm” on one line */
+  }
+
+  /* hide long tagline on mobile */
+  .tagline {
+    display: none !important;
+  }
+
+  /* small Home / About Us pills */
+  .top-nav {
+    margin-top: 0;
+    margin-left: 6px;
+    display: flex;
+    gap: 4px;
+  }
+
+  .top-nav a {
+    padding: 3px 6px;
+    font-size: 10px;
+    border-radius: 6px;
+  }
+
+  /* make sure header is visible even during quiz */
+  body.in-quiz .app-header {
+    display: flex !important;
+  }
+
+  /* push quiz/registration down so they don’t touch header */
+  .question-area,
+  .register-box {
+    margin-top: 70px !important;
+  }
+
+  /* hide footer on phones to save space */
+  .copyright {
+    display: none !important;
+  }
+}
