@@ -1340,3 +1340,59 @@ body.lang-ur .answer-btn .text {
     display: none !important;
   }
 }
+/* =========================================
+   COMPACT HEADER FOR PHONE PORTRAIT
+   (logo + brand + small Home/About)
+   ========================================= */
+@media (max-width: 640px) and (orientation: portrait) {
+
+  /* show header again, but make it small + fixed */
+  .app-header {
+    display: flex !important;
+    position: fixed !important;
+    top: 10px;
+    left: 10px;
+    z-index: 1500;
+    padding: 4px 6px;
+    border-radius: 8px;
+    gap: 2px;
+  }
+
+  /* logo smaller */
+  .brand-icon {
+    font-size: 14px;
+  }
+
+  /* "Ana Madinah tul Ilm" / brand text smaller */
+  .brand-name {
+    font-size: 11px;
+  }
+
+  /* hide long tagline text on small phones */
+  .tagline {
+    display: none !important;
+  }
+
+  /* make Home / About Us buttons tiny pills */
+  .top-nav {
+    margin-top: 2px;
+    gap: 4px;
+  }
+
+  .top-nav a {
+    padding: 3px 6px;
+    font-size: 10px;
+    border-radius: 6px;
+  }
+
+  /* keep footer hidden to save space */
+  .copyright {
+    display: none !important;
+  }
+
+  /* leave a bit of space under header for question/registration */
+  .question-area,
+  .register-box {
+    margin-top: 70px !important;
+  }
+}
