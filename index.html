@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IFA Learning Hub Quiz App</title>
+  <link rel="stylesheet" href="style.css?v=4">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+</head>
+
+<div class="watermark" data-i18n="brandName">IFA Learning Hub Toheed</div>
+
+<body>
+  <!-- Language Switch -->
+    <div id="langSwitcher" class="lang-switch">
+    <button type="button" data-lang="ur">اردو</button>
+    <button type="button" data-lang="en">EN</button>
+    <button type="button" data-lang="ru">RU</button>
+  </div>
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-icon">🌙</span>
+      <span class="brand-name" data-i18n="brandName">IFA Learning Hub Toheed</span>
+      <nav class="top-nav">
+  <a href="index.html" class="active">🏠 Home</a>
+  <a href="aboutus.html">ℹ️ About Us</a>
+</nav>
+
+    </div>
+
+    <div class="tagline" data-i18n="tagline">Learn with Faith &amp; Precision</div>
+
+    
+  </header>
+
+  <div class="quote-box">
+    <p class="quote-arabic">"أنا مدينة العلم وعلي بابها"</p>
+    <p class="quote-english" data-i18n="quote">"I am the city of knowledge, and 'Ali is its gate"</p>
+  </div>
+
+  <!-- Chapters / Home screen -->
+  <section id="home" class="home hidden">
+    <h1 class="home-title" data-i18n="chooseChapter">Choose a Chapter</h1>
+
+    <div id="chaptersGrid" class="chapters-grid">
+      
+      <!-- (Your JS should use: <h3 class="chapter-title" dir="auto">...</h3>) -->
+    </div>
+
+    <div class="mock-wrap">
+      <button id="mockBtn" class="mock-btn" data-i18n="finalMock">Final Mock Test</button>
+    </div>
+  </section>
+<div id="registration-screen" class="register-box">
+    <h2 class="reg-title">Toheed Quiz</h2>
+    <p class="reg-subtitle">Please register your details before starting the quiz.</p>
+
+    <label>Full Name</label>
+    <input type="text" id="fullName" placeholder="Enter your full name" required>
+
+    <label>Date of Birth</label>
+    <input type="date" id="dob" required>
+
+    <button id="registerBtn">Register & Continue</button>
+</div>
+
+  <div class="quiz-container" id="quiz-container">
+    <!-- Timer Display Area -->
+    <div class="timer-container">
+      <!-- Back button (shown during quiz) -->
+      <button id="btnBackChapters" class="back-btn" data-i18n="backChapters">Back to Chapters</button>
+
+      <h2 id="timer">15</h2>
+
+      <!-- Question counter (text set by JS) -->
+      <div id="qCounter" class="q-counter">Q 1 / 10</div>
+    </div>
+
+    <!-- Question Area -->
+    <div class="question-area">
+      <h1 id="question">Question Text Goes Here</h1>
+    </div>
+
+    <!-- Answer Grid -->
+    <div class="answers-grid">
+      <button class="answer-btn" id="a" onclick="selectAnswer('a')">
+        <span class="shape">▲</span>
+        <span class="text" id="a_text">Answer A</span>
+      </button>
+      <button class="answer-btn" id="b" onclick="selectAnswer('b')">
+        <span class="shape">◆</span>
+        <span class="text" id="b_text">Answer B</span>
+      </button>
+      <button class="answer-btn" id="c" onclick="selectAnswer('c')">
+        <span class="shape">●</span>
+        <span class="text" id="c_text">Answer C</span>
+      </button>
+      <button class="answer-btn" id="d" onclick="selectAnswer('d')">
+        <span class="shape">■</span>
+        <span class="text" id="d_text">Answer D</span>
+      </button>
+    </div>
+  </div>
+
+  <footer class="copyright">
+    <span data-i18n="copyright">© 2025 IFA Learning Hub</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

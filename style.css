@@ -1,0 +1,1137 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+:root {
+    --bg-color: #1a237e; /* Dark Blue */
+    --accent-color: #4527a0; /* Dark Purple */
+    --card-bg: rgba(255, 255, 255, 0.1);
+    --button-bg-a: #BE1E4E; /* Red */
+    --button-bg-b: #1664C0; /* Blue */
+    --button-bg-c: #D89F0A; /* Yellow/Orange */
+    --button-bg-d: #0E7D2E; /* Green */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    /* Updated background to use an image */
+    background-image: url('photo\ background.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: white;
+}
+
+.quiz-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    height: 70vh;
+    padding: 20px;
+}
+
+/* ===== Timer (top-right corner, larger stylish box) ===== */
+.timer-container {
+  position: fixed;
+  top: 20px;
+  right: 25px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 14px 26px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  width: auto;
+  min-width: 80px;
+  text-align: center;
+  z-index: 1000;
+}
+
+#timer {
+  font-size: 2.2rem; /* Bigger number */
+  font-weight: 800;
+  margin: 0;
+  color: #FFD700; /* Golden tone for elegance */
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5),
+               0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* ===== QUESTION BAR (centered) ===== */
+.question-area {
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black */
+  backdrop-filter: blur(5px);           /* Subtle blur effect */
+  padding: 16px 25px;
+  border-radius: 10px;
+  text-align: center;
+
+  display: block;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto 20px;                 /* ⬅ centers horizontally */
+
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: auto;
+}
+
+/* ===== Responsive question text sizing ===== */
+#question {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  margin: 0;
+  color: #fff;
+  text-shadow: 0 0 5px rgba(0,0,0,0.4);
+  /* responsive scaling */
+  font-size: clamp(1.2rem, 2.5vw + 0.5rem, 2.4rem);
+  line-height: 1.4;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
+
+/* ===== ANSWER GRID (centered 2×2) ===== */
+.answers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+    flex-grow: 2;
+
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;          /* ⬅ center the entire grid */
+}
+
+.answer-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.answer-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.answer-btn:active {
+    transform: scale(0.98);
+}
+
+.shape {
+    font-size: 3rem; /* increased from 2.5rem */
+    margin-right: 18px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.text {
+    text-align: left;
+    flex-grow: 1;
+    font-size: 1.8rem; /* increased from 1.2rem */
+    font-weight: 600;
+}
+
+/* Kahoot Colors */
+#a { background-color: var(--button-bg-a); }
+#b { background-color: var(--button-bg-b); }
+#c { background-color: var(--button-bg-c); }
+#d { background-color: var(--button-bg-d); }
+
+/* Styles for correct/incorrect feedback (managed by JS) */
+.correct {
+    background-color: var(--button-bg-d) !important;
+    opacity: 1 !important;
+    transform: scale(1.05);
+    animation: pulse 1s infinite alternate;
+}
+
+.incorrect {
+    background-color: var(--button-bg-a) !important;
+    opacity: 0.5 !important;
+}
+
+.disabled {
+    pointer-events: none;
+    cursor: default;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1.05);
+    }
+    to {
+        transform: scale(1.07);
+    }
+}
+
+/* ===== Brand (top-left, shiny gold, responsive) ===== */
+.app-header{
+  position: fixed;
+  top: clamp(10px, 2vw, 20px);
+  left: clamp(12px, 2vw, 25px);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: rgba(0,0,0,0.55);
+  padding: clamp(6px, 1.2vw, 10px) clamp(8px, 1.6vw, 14px);
+  border-radius: 8px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.brand{
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 1vw, 8px);
+}
+
+/* --- adds faint watermark behind text --- */
+.brand::before {
+  content: "IFA Learning Hub Toheed";
+  position: absolute;
+  top: 40%;
+  left: 0;
+  transform: translateY(-50%) scale(1.3);
+  font-weight: 800;
+  font-size: clamp(16px, 3vw, 22px);
+  color: rgba(212,175,55,0.15); /* very light gold watermark */
+  filter: blur(2px);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+
+.brand-icon{
+  font-size: clamp(14px, 2.2vw, 18px);
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.brand-name{
+  position: relative;
+  z-index: 1;
+  font-weight: 700;
+  font-size: clamp(14px, 2.6vw, 18px);
+  letter-spacing: .3px;
+
+  /* shiny gold gradient */
+  background: linear-gradient(90deg, #d4af37, #ffd700, #d4af37);
+
+  /* text clipping — include BOTH standard + webkit for compatibility */
+  background-clip: text;           /* 👈 standard */
+  -webkit-background-clip: text;   /* 👈 webkit browsers */
+
+  /* make the text transparent so the gradient shows through */
+  color: transparent;              /* 👈 standard */
+  -webkit-text-fill-color: transparent; /* 👈 webkit */
+
+  text-shadow: 0 0 5px rgba(255,215,0,.4), 0 0 10px rgba(255,215,0,.3);
+  animation: shineMove 4s infinite linear;
+}
+
+/* Fallback for browsers that don't support text-clip */
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .brand-name{
+    background: none;
+    color: #d4af37;  /* solid gold */
+  }
+}
+
+/* smooth moving light reflection */
+@keyframes shineMove {
+  0% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2), 0 0 10px rgba(255, 215, 0, 0.2); }
+  50% { text-shadow: 0 0 12px rgba(255, 255, 180, 0.6), 0 0 25px rgba(255, 255, 160, 0.4); }
+  100% { text-shadow: 0 0 5px rgba(255, 215, 0, 0.2), 0 0 10px rgba(255, 215, 0, 0.2); }
+}
+
+.tagline{
+  position: relative;
+  z-index: 1;
+  margin-top: 2px;
+  font-size: clamp(9px, 1.8vw, 12px);
+  color: rgba(255,255,255,0.9);
+  padding-left: calc(
+    clamp(14px, 2.2vw, 18px) + clamp(6px, 1vw, 8px)
+  );
+  white-space: nowrap;
+}
+
+/* Subtle watermark bottom-right */
+.watermark{
+  position: fixed;
+  right: 16px;
+  bottom: 12px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  color: #D4AF37;
+  opacity: 0.08;
+  pointer-events: none;
+  user-select: none;
+  font-size: clamp(10px, 2vw, 14px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 420px){
+  .brand-name{ font-size: 15px; }
+  .tagline{ font-size: 10px; padding-left: 24px; white-space: normal; line-height: 1.2; }
+  .watermark{ display:none; }
+}
+
+/* ===== Beautiful Hadith Quote at top center ===== */
+.quote-box {
+  position: absolute;
+  top: 22px;                   /* same height as brand */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 900;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 25px 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  max-width: 90%;
+}
+
+/* Arabic text — glowing golden */
+.quote-arabic {
+  font-family: "Scheherazade New", "Amiri", serif;
+  font-size: clamp(1.3rem, 2.4vw, 2.6rem);
+  color: #FFD700;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.6),
+               0 0 18px rgba(255, 215, 0, 0.4);
+  direction: rtl;
+}
+
+/* English translation — white with soft glow */
+.quote-english {
+  font-size: clamp(0.9rem, 1.6vw, 1.2rem);
+  color: #fff;
+  opacity: 0.9;
+  margin-top: 5px;
+  font-style: italic;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+}
+
+/* ===== Result box styling ===== */
+.result-box {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  padding: 30px 40px;
+  max-width: 400px;
+  width: 85%;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.result-box h2 {
+  margin-bottom: 10px;
+  font-size: 1.8rem;
+  color: #FFD700;
+}
+
+.result-box p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.play-again-btn {
+  background-color: #1664C0;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.play-again-btn:hover {
+  background-color: #0E4A91;
+  transform: scale(1.05);
+}
+
+/* --- Clean centered white footer --- */
+.copyright {
+  position: fixed;
+  bottom: 10px;                /* distance from bottom edge */
+  left: 50%;                   /* horizontal centering */
+  transform: translateX(-50%); /* perfect center alignment */
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #ffffff;              /* pure white text */
+  text-align: center;
+  z-index: 1000;
+  text-shadow: none;
+  background: transparent;
+}
+
+/* completely disable any pseudo element duplication */
+.copyright::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* ===== Chapters / Home screen ===== */
+.hidden { display: none; }
+
+.home {
+  width: min(100%, 900px);
+  margin: 80px auto 30px;             /* leaves room for your header/quote */
+  padding: 10px 16px;
+  text-align: center;
+}
+
+.home-title {
+  font-size: clamp(1rem, 2.4vw, 1.6rem);  /* smaller than before */
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.chapters-grid{
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+.chapter-card{
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 16px 12px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease, background .15s;
+  backdrop-filter: blur(6px);
+  .chapter-title{ unicode-bidi: plaintext; }
+
+}
+
+.chapter-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.35);
+  background: rgba(0,0,0,0.65);
+}
+
+.chapter-title{
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: #D89F0A; /* your gold accent */
+  font-size: 1rem;
+}
+.chapter-meta{
+  opacity: .85;
+  font-size: .85rem;
+}
+
+/* Final mock button */
+.mock-wrap{
+  margin-top: 16px;
+}
+.mock-btn{
+  background: #1664C0;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.mock-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.35);
+}
+
+/* Responsive chapters grid */
+@media (max-width: 900px){
+  .chapters-grid{ grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 640px){
+  .chapters-grid{ grid-template-columns: repeat(2, 1fr); }
+}
+
+/* put back button and counter neatly inside the timer box */
+.timer-container {
+  display: flex;
+  flex-direction: column;   /* button on top, then big timer, then counter */
+  align-items: center;
+  gap: 6px;
+}
+
+.back-btn {
+  align-self: flex-end;
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: 0.15s;
+}
+.back-btn:hover { background: rgba(255,255,255,0.22); }
+
+.q-counter {
+  font-size: 0.95rem;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.lang-switch{
+  position: fixed;      /* stick to viewport, not inside header */
+  top: 96px;            /* set below your header; adjust 84–110px to taste */
+  right: 24px;
+  z-index: 2000;
+  display: flex;
+  gap: 8px;
+}
+
+.lang-switch button{
+  background:#fff;
+  color:#000;
+  border:none;
+  padding:4px 10px;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
+}
+.lang-switch button:hover{ background:#ffd700; }
+
+@media (max-width:640px){
+  .lang-switch{ top: 88px; right: 12px; }
+}
+
+/* Language switcher pinned top-right */
+#langSwitcher{
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+}
+
+/* Move the timer/counter box below the switcher so they don't collide */
+.timer-container{
+  position: fixed;
+  top: 72px;          /* was near top; now pushed down */
+  right: 16px;
+  z-index: 900;
+}
+
+@media (max-width: 768px){
+  .timer-container{ top: 92px; } /* a bit more space on small screens */
+}
+
+/* ================================
+   Language-specific typography
+   ================================ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@600;700&display=swap');
+
+/* Base fallbacks by language */
+body.lang-ur {
+  font-family: "Noto Nastaliq Urdu", "Scheherazade New", serif;
+}
+body.lang-en,
+body.lang-ru {
+  font-family: "Noto Sans", "Poppins", "Segoe UI", Arial, sans-serif;
+}
+
+/* Question text: EN/RU a bit smaller/tighter */
+body.lang-en #question,
+body.lang-ru #question {
+  font-size: clamp(1.05rem, 2vw + 0.35rem, 2.0rem);
+  line-height: 1.28;
+}
+
+/* Answer text: EN/RU smaller than Urdu */
+body.lang-en .answer-btn .text,
+body.lang-ru .answer-btn .text {
+  font-size: clamp(1rem, 1.1vw + 0.55rem, 1.35rem);
+  line-height: 1.25;
+}
+
+/* Icon shapes also a touch smaller for EN/RU */
+body.lang-en .answer-btn .shape,
+body.lang-ru .answer-btn .shape {
+  font-size: 2.2rem;
+  margin-right: 14px;
+}
+
+/* Slightly tighter padding for EN/RU answer buttons */
+body.lang-en .answer-btn,
+body.lang-ru .answer-btn {
+  padding: 16px 18px;
+}
+
+/* Chapter cards: reduce title size a bit for long words (EN/RU) */
+body.lang-en .chapter-title,
+body.lang-ru .chapter-title {
+  font-size: 0.92rem;
+}
+
+/* Counter text fits nicer with EN/RU */
+body.lang-en .q-counter,
+body.lang-ru .q-counter {
+  font-size: 0.9rem;
+}
+
+/* Keep Urdu as-is, but ensure good line-height */
+body.lang-ur .answer-btn .text {
+  line-height: 1.4;
+}
+
+/* ====== About Page & Nav ====== */
+.top-nav {
+  margin-top: 8px;
+  display: flex;
+  gap: 10px;
+}
+.top-nav a {
+  text-decoration: none;
+  color: white;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-weight: 600;
+}
+.top-nav a:hover {
+  background: rgba(255,255,255,0.25);
+}
+.top-nav a.active {
+  background: rgba(255,255,255,0.4);
+}
+
+.about {
+  width: min(100%, 900px);
+  margin: 120px auto 40px;
+  padding: 14px 16px;
+  color: #fff;
+  text-align: left;
+}
+.about-title {
+  text-align:center;
+  font-size: clamp(1.2rem, 2.6vw, 1.8rem);
+  margin-bottom: 8px;
+}
+.about-text {
+  opacity: .95;
+  text-align: center;
+  margin: 0 auto 20px;
+  max-width: 760px;
+}
+
+/* Contact section */
+.contact-wrap {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+  gap: 14px;
+  margin: 18px 0 8px;
+}
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fff;
+  transition: transform .15s, box-shadow .15s, background .15s;
+  backdrop-filter: blur(6px);
+}
+.contact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,.35);
+  background: rgba(0,0,0,0.65);
+}
+.contact-card .icon {
+  font-size: 1.6rem;
+}
+
+/* Reviews */
+.about-subtitle {
+  margin: 20px 0 10px;
+  text-align:center;
+}
+.reviews-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.review-card {
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.review-card .who {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.review-card .stars {
+  color: #FFD700;
+  margin-left: 4px;
+}
+.review-card .text {
+  opacity: .95;
+}
+
+.review-form {
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px;
+  padding: 14px;
+}
+.review-form-title {
+  margin: 0 0 8px;
+}
+.review-form .row {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.review-form input, .review-form select, .review-form textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 10px;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+.review-form textarea { resize: vertical; }
+
+/* ===== Reviews Section Styling ===== */
+.reviews {
+  background: rgba(0, 0, 0, 0.55);     /* subtle dark layer */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  padding: 25px 20px;
+  margin-top: 30px;
+  backdrop-filter: blur(8px);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.review-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+}
+
+.review-card .who {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.review-card .stars {
+  color: #FFD700; /* bright golden stars */
+  letter-spacing: 1px;
+  font-size: 1rem;
+}
+
+.review-card .text {
+  color: #f5f5f5;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.review-form {
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.review-form input,
+.review-form select,
+.review-form textarea {
+  background: rgba(255,255,255,0.95);
+  color: #000;              /* ✅ make typed text visible (black) */
+  resize: vertical;
+  border: none;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.review-form input,
+.review-form select {
+  background: rgba(255,255,255,0.9);
+  color: #000;
+}
+
+.review-form textarea {
+  background: rgba(255,255,255,0.95);
+  resize: vertical;
+}
+
+.review-form-title {
+  font-weight: 600;
+  color: #FFD700;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.reviews-list { color:#fff; }
+.review-card .stars { color:#FFD700; }
+
+/* ==== FINAL MOBILE FIX ==== */
+@media (max-width: 640px){
+
+  .app-header{
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    margin: 8px 8px 0 8px;
+    width: auto;
+    z-index: auto;
+  }
+
+  .quote-box{
+    display: none !important;
+  }
+
+  #langSwitcher{
+    position: fixed !important;
+    top: 10px;
+    right: 10px;
+    z-index: 1200;
+  }
+
+  .timer-container{
+    top: 54px !important;
+    right: 10px !important;
+    z-index: 1100;
+  }
+
+  .home,
+  .about{
+    margin-top: 10px !important;
+  }
+
+  .copyright{
+    position: static !important;
+    transform: none !important;
+    margin: 16px auto 24px;
+    text-align: center;
+  }
+}
+
+/* Hide header automatically during quizzes (clean mobile view) */
+@media (max-width: 640px){
+  body.in-quiz .app-header{ display: none !important; }
+}
+
+/* ===================== MOBILE QUIZ CLEANUP ===================== */
+@media (max-width: 640px) {
+
+  body.in-quiz .app-header,
+  body.in-quiz .quote-box {
+    display: none !important;
+  }
+
+  .timer-container {
+    position: fixed !important;
+    top: 60px !important;
+    right: 10px !important;
+    width: 140px;
+    padding: 10px 12px;
+    gap: 4px;
+  }
+
+  .timer-container h2#timer {
+    font-size: 1.8rem;
+  }
+
+  .back-btn {
+    align-self: stretch;
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 4px 6px;
+  }
+
+  .q-counter {
+    font-size: 0.75rem;
+  }
+
+  body:not(.in-quiz) .app-header {
+    position: static !important;
+    margin: 8px 8px 0 8px;
+    width: auto;
+  }
+
+  .copyright {
+    position: static !important;
+    transform: none !important;
+    margin: 16px auto 24px;
+  }
+
+  .question-area {
+    margin-top: 75px;
+  }
+}
+
+/* =========== MOBILE LANDSCAPE =========== */
+@media (max-width: 900px) and (orientation: landscape) {
+
+  body.in-quiz .app-header,
+  body.in-quiz .quote-box {
+    display: none !important;
+  }
+
+  .timer-container {
+    top: 8px !important;
+    right: 8px !important;
+    width: 120px;
+    padding: 6px 10px;
+  }
+
+  .timer-container h2#timer {
+    font-size: 1.4rem;
+  }
+
+  .q-counter {
+    font-size: 0.7rem;
+  }
+
+  .question-area {
+    margin-top: 60px;
+  }
+}
+
+/* =========================================================
+   MOBILE FIX – iPhone Safari + Chrome
+   ========================================================= */
+@media (max-width: 720px) {
+
+  .app-header {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: auto;
+    margin: 10px 10px 0 10px;
+    z-index: 5;
+  }
+
+  .copyright {
+    position: static !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    margin: 14px auto 22px;
+    text-align: center;
+  }
+
+  #langSwitcher {
+    position: fixed !important;
+    top: 10px;
+    right: 10px;
+    z-index: 2000;
+  }
+
+  .timer-container {
+    position: fixed !important;
+    top: 60px !important;
+    right: 10px !important;
+    width: 150px;
+    padding: 8px 10px;
+    gap: 4px;
+    z-index: 1500;
+  }
+  .timer-container #timer {
+    font-size: 1.6rem;
+  }
+  .back-btn {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8rem;
+    padding: 4px 6px;
+  }
+  .q-counter {
+    font-size: 0.7rem;
+  }
+
+  .question-area {
+    margin-top: 78px;
+  }
+
+  body.in-quiz .app-header,
+  body.in-quiz .copyright {
+    display: none !important;
+  }
+
+  .home {
+    margin-top: 8px !important;
+  }
+
+  .about {
+    margin-top: 8px !important;
+  }
+}
+
+/* =========================================================
+   MOBILE LANDSCAPE – make timer even thinner
+   ========================================================= */
+@media (max-width: 900px) and (orientation: landscape) {
+
+  .timer-container {
+    top: 10px !important;
+    right: 10px !important;
+    width: 130px;
+    padding: 6px 8px;
+  }
+
+  .timer-container #timer {
+    font-size: 1.4rem;
+  }
+
+  .question-area {
+    margin-top: 60px;
+  }
+
+  body.in-quiz .app-header,
+  body.in-quiz .copyright {
+    display: none !important;
+  }
+}
+
+/* ===== Registration box ===== */
+.register-box {
+  width: 380px;
+  margin: 50px auto;
+  padding: 25px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Title color updated */
+.reg-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #3b2600; /* Deep brown, very readable */
+}
+
+/* Subtitle color updated */
+.reg-subtitle {
+  font-size: 14px;
+  margin-bottom: 25px;
+  opacity: 1;
+  color: #5a4000; /* Softer brown */
+}
+
+/* Labels improved */
+.register-box label {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4a3500; /* readable brown */
+}
+
+/* Input fields */
+.register-box input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 15px;
+  background: #ffffff;
+  color: #000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Button */
+#registerBtn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #5b3a0d, #3d2605); /* DARK BROWN GRADIENT */
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: 0.2s ease;
+}
+
+#registerBtn:hover {
+  background: linear-gradient(90deg, #3d2605, #2b1a04); /* even darker on hover */
+  transform: scale(1.02);
+  opacity: 1;
+}
+
+/* Urdu right-to-left */
+.rtl {
+  direction: rtl;
+  text-align: right;
+  font-family: 'Noto Nastaliq Urdu', serif;
+}
+
+/* English / Russian left-to-right */
+.ltr {
+  direction: ltr;
+  text-align: left;
+}

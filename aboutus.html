@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us – IFA Learning Hub Toheed</title>
+
+  <!-- Import same font + CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Optional favicon -->
+  <link rel="icon" href="favicon.ico" />
+</head>
+<body class="lang-en">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="brand">
+      <span class="brand-icon">🌙</span>
+      <span class="brand-name" data-i18n="brandName">IFA Learning Hub Toheed</span>
+      <nav class="top-nav">
+  <a href="index.html" class="active">🏠 Home</a>
+  <a href="aboutus.html">ℹ️ About Us</a>
+</nav>
+
+    </div>
+
+    <div class="tagline" data-i18n="tagline">Learn with Faith &amp; Precision</div>
+
+    
+  </header>
+
+  <!-- Hadith Quote -->
+  <div class="quote-box">
+    <p class="quote-arabic">"أنا مدينةُ العلمِ وعليٌّ بابُها"</p>
+    <p class="quote-english">"I am the city of knowledge, and ‘Ali is its gate."</p>
+  </div>
+
+  <!-- About Section -->
+  <section class="about">
+    <h1 class="about-title">About IFA Learning Hub</h1>
+    <p class="about-text">
+      IFA Learning Hub Toheed is an educational platform dedicated to helping learners master Tajwīd — 
+      the art of Quranic recitation — with accuracy and love for the Qur’an. 
+      Our aim is to make learning accessible through interactive chapter-wise quizzes, mock tests, and multilingual support.
+    </p>
+
+    <!-- Contact Section -->
+    <!-- Contact Section -->
+<h2 class="about-subtitle">📞 Contact Us</h2>
+<div class="contact-wrap">
+
+  <a id="contactEmail"
+     class="contact-card"
+     href="mailto:sufarwa@yahoo.com?subject=IFA%20Learning%20Hub%20Query"
+     target="_self">
+    <span class="icon">✉️</span>
+    <span>
+      <strong>Email</strong><br>
+      <small>Send us a message</small>
+    </span>
+  </a>
+
+  <a id="contactWhatsApp"
+     class="contact-card"
+     href="https://wa.me/447470831407?text=Assalamu%20Alaikum!%20I%20would%20like%20to%20know%20more%20about%20IFA%20Learning%20Hub."
+     target="_blank" rel="noopener">
+    <span class="icon">💬</span>
+    <span>
+      <strong>WhatsApp</strong><br>
+      <small>Chat with us</small>
+    </span>
+  </a>
+
+</div>
+
+
+    <!-- Reviews Section -->
+    <div class="reviews">
+      <h2 class="about-subtitle">⭐ Reviews</h2>
+
+      <div id="reviewsList" class="reviews-list">
+        <!-- JS will insert reviews here -->
+      </div>
+
+      <form id="reviewForm" class="review-form">
+        <h3 class="review-form-title">Leave a review</h3>
+        <div class="row">
+          <input id="revName" type="text" placeholder="Your name" required>
+          <select id="revStars" required>
+            <option value="" disabled selected>Stars</option>
+            <option value="5">★★★★★ (5)</option>
+            <option value="4">★★★★☆ (4)</option>
+            <option value="3">★★★☆☆ (3)</option>
+            <option value="2">★★☆☆☆ (2)</option>
+            <option value="1">★☆☆☆☆ (1)</option>
+          </select>
+        </div>
+        <textarea id="revText" rows="3" placeholder="Your comments…" required></textarea>
+        <button type="submit" class="play-again-btn">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <div class="copyright">
+    © 2025 IFA Learning Hub Toheed
+  </div>
+
+  <!-- Main JS -->
+  <script src="aboutus.js"></script>
+</body>
+</html>
