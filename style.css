@@ -1304,3 +1304,39 @@ body.lang-ur .answer-btn .text {
     font-size: 1.4rem !important;
   }
 }
+/* ===== FINAL OVERRIDE: PHONE PORTRAIT ===== */
+@media (max-width: 640px) and (orientation: portrait) {
+  /* hide big header + footer completely on phones in portrait */
+  .app-header,
+  .copyright {
+    display: none !important;
+  }
+
+  /* move question/registration a bit down so it breathes */
+  .question-area,
+  .register-box {
+    margin-top: 70px !important;
+  }
+}
+/* ===== FINAL OVERRIDE: PHONE LANDSCAPE ===== */
+@media (max-width: 900px) and (orientation: landscape) {
+
+  /* always show header in landscape so user can open Home/About */
+  .app-header {
+    display: flex !important;
+    position: fixed;
+    top: 8px;
+    left: 8px;
+    z-index: 1300;
+  }
+
+  /* keep footer hidden during quiz (saves space) */
+  body.in-quiz .copyright {
+    display: none !important;
+  }
+
+  /* hide only the quote when actually inside quiz */
+  body.in-quiz .quote-box {
+    display: none !important;
+  }
+}
