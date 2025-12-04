@@ -1135,3 +1135,70 @@ body.lang-ur .answer-btn .text {
   direction: ltr;
   text-align: left;
 }
+/* ======================================
+   ABSOLUTE FIX FOR MOBILE LANDSCAPE
+   CLEAN, CENTERED, NO OVERLAP
+   ====================================== */
+@media (max-width: 900px) and (orientation: landscape) {
+
+  /* Hide header + quote — gives full space */
+  .app-header,
+  .quote-box {
+    display: none !important;
+  }
+
+  /* Center question area nicely */
+  .question-area {
+    margin-top: 70px !important;
+    max-width: 95%;
+    width: 95%;
+    padding: 10px 14px !important;
+  }
+
+  #question {
+    font-size: 1.4rem !important;
+    text-align: center !important;
+  }
+
+  /* Timer moves to top-left, small and clean */
+  .timer-container {
+    top: 10px !important;
+    right: 10px !important;
+    width: 120px !important;
+    padding: 6px 8px !important;
+  }
+
+  #timer {
+    font-size: 1.3rem !important;
+  }
+
+  /* Fix answer grid for landscape */
+  .answers-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    max-width: 95% !important;
+    width: 95% !important;
+    margin: 0 auto !important;
+  }
+
+  /* Buttons smaller to fit side-by-side */
+  .answer-btn {
+    padding: 12px !important;
+    font-size: 1rem !important;
+  }
+
+  .answer-btn .text {
+    font-size: 1.1rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .answer-btn .shape {
+    font-size: 1.6rem !important;
+    margin-right: 10px !important;
+  }
+
+  /* Hide footer on landscape mobile */
+  .copyright {
+    display: none !important;
+  }
+}
